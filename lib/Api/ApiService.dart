@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 class ApiService {
   static final String baseUrl =' ';
 
-  Future<String?> createDid() async {
+  Future<String?> issueDid() async {
     final url = Uri.parse('$baseUrl/');
 
     try {
@@ -27,7 +27,7 @@ class ApiService {
     }
   }
 
-  Future<String?> createVC()async {
+  Future<String?> createCred()async {
     final url = Uri.parse('$baseUrl/');
 
     try {
@@ -49,7 +49,7 @@ class ApiService {
     }
   }
 
-  Future<String?> createVP()async{
+  Future<String?> createPre()async{
     final url=Uri.parse('$baseUrl/');
 
     try{

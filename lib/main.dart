@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Screens/makeDid.dart';
+import 'Screens/homeScreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: '',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.indigo),
-      home: makeDid(),
+      home: homeScreen(),
     );
   }
 }
