@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../Api/ApiService.dart';
 import 'dart:convert';
+import '../Widget/infoCard.dart';
 
 class createCred extends StatefulWidget{
   const createCred({super.key});
@@ -12,9 +13,10 @@ class createCred extends StatefulWidget{
 
 class _createCredState extends State<createCred> {
 
+  final primaryColor= Colors.black;
+  final labelColor= Colors.greenAccent;
 
   Map<String, dynamic>? _credData;
-  bool _isLoading = false;
 
   Future<void> _createCred() async {
 
@@ -32,8 +34,22 @@ class _createCredState extends State<createCred> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        leading: BackButton(color: labelColor,),
+      ),
+      backgroundColor: primaryColor,
+      body: Center(
+        child: _credData != null
+            ? Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            infoCard(title: "Create Credential", value: _credData![' '] ?? '-'),
+            // 다른 결과 위젯 추가 가능
+          ],
+        )
+            : SizedBox.shrink(),
+      ),
     );
   }
 }

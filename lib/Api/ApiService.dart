@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -11,7 +10,7 @@ class ApiService {
     try {
       final response = await http.post(
         url,
-        headers: {'Contetnt-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json'},
         body: jsonEncode({}),
       );
 

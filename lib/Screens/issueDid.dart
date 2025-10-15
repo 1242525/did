@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:did/Api/ApiService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../Widget/infoCard.dart';
 
 class makeDid extends StatefulWidget {
   const makeDid({super.key});
@@ -13,21 +14,21 @@ class makeDid extends StatefulWidget {
 class _makeDidState extends State<makeDid> {
 
 Map<String, dynamic>? _didData;
-bool _isLoading =false;
+
+final primaryColor= Colors.black;
+final labelColor= Colors.greenAccent;
 
   Future<void> _issueDid() async {
     setState(() {
-      _isLoading=true;
-      _didData;
-      }
+      _didData = null;
+    }
     );
 
-    final api=ApiService();
-    final result=await api.issueDid();
-    if(result!=null){
-      final data= jsonDecode(result) as Map<String, dynamic>;
+    final result = await ApiService().issueDid();
+    if (result != null) {
+      final data = jsonDecode(result) as Map<String, dynamic>;
       setState(() {
-        _didData=data;
+        _didData = data;
       });
     }
   }
@@ -35,15 +36,24 @@ bool _isLoading =false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        leading: BackButton(color: labelColor,),
+      ),
+        backgroundColor: primaryColor,
         body: Center(
-            child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 24, vertical: 40),
-
-            )
+              child: _didData != null
+          ? Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            infoCard(title: "DID", value: _didData!['DID :'] ?? '-'),
+            // 다른 결과 위젯 추가 가능
+          ],
         )
+            : SizedBox.shrink(),
+    ),
     );
+
 
   }
 }
