@@ -1,11 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../Screens/issueDid.dart';
-import '../Screens/createCred.dart';
-import '../Screens/createPres.dart';
-import '../Screens/verifyCred.dart';
-import '../Screens/verifyPres.dart';
+import 'Did/issueDid.dart';
+import 'Did/checkDid.dart';
+import 'vc/issueVC.dart';
+import '../Screens/vc/issueVC.dart';
 
 class homeScreen extends StatelessWidget{
   homeScreen({super.key});
@@ -31,13 +29,28 @@ class homeScreen extends StatelessWidget{
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => makeDid()
+                      MaterialPageRoute(builder: (_) => MakeDid(),
                       ),
                     );
                   },
                 ),
 
                 const SizedBox(height: 30),
+                _buildHomeButton(
+                  context,
+                  text: 'check DID',
+                  icon: Icons.checklist,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => checkDid()
+                      ),
+                    );
+                  },
+                ),
+
+
+                /*const SizedBox(height: 30),
                 _buildHomeButton(
                     context,
                     text: 'create credential',
@@ -48,28 +61,16 @@ class homeScreen extends StatelessWidget{
                           ),
                       );
                     },
-                ),
-
-                const SizedBox(height: 30),
-                _buildHomeButton(context,
-                    text: 'create presentation',
-                    icon: Icons.text_snippet,
-                    onPressed: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_)=> createPre()
-                          ),
-                      );
-                    },
-                ),
+                ),*/
 
 
-                const SizedBox(height: 30),
+                /*const SizedBox(height: 30),
                 _buildHomeButton(context,
                     text: 'verify credential',
                     icon: Icons.check,
                     onPressed: (){
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (_)=> verifyCred()
+                          MaterialPageRoute(builder: (_)=> ()
                       ),
                       );
                     },
@@ -86,6 +87,8 @@ class homeScreen extends StatelessWidget{
                   );
                   },
                 ),
+
+                 */
 
 
               ],

@@ -1,9 +1,9 @@
-import 'dart:convert';
+/*import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../Widget/infoCard.dart';
+import '../../Widget/infoCard.dart';
 
-import '../Api/ApiService.dart';
+import '../../Api/ApiService.dart';
 
 class verifyCred extends StatefulWidget{
   const verifyCred({super.key});
@@ -58,3 +58,5 @@ class _verifyCredState extends State<verifyCred>{
 
   }
 }
+
+ */
