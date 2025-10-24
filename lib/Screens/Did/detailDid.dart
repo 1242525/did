@@ -7,6 +7,8 @@ import '../../Api/ApiService.dart';
 class detailDid extends StatefulWidget{
   final String did;
   const detailDid ({super.key, required this.did});
+
+
   
   State<detailDid> createState() => _detailDidState();
   
@@ -15,6 +17,7 @@ class detailDid extends StatefulWidget{
 class _detailDidState extends State<detailDid>{
   
   Map<String, dynamic>? detail;
+  final Color labelColor= Colors.greenAccent;
   
   Future<void> _detailDid(String did)async{
     final ApiService api= ApiService();
@@ -35,7 +38,9 @@ class _detailDidState extends State<detailDid>{
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: AppBar(title: Text("did 상세정보"),),
+      appBar: AppBar(title: Text("did 상세정보"),
+        leading: BackButton(color: labelColor),),
+
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

@@ -1,56 +1,67 @@
-/*import 'dart:convert';
+import 'dart:convert';
+import 'package:jwt_decode/jwt_decode.dart';
+
+import 'package:did/Api/ApiService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../Widget/infoCard.dart';
+import '../vp/issueVP.dart';
 
-import '../../Api/ApiService.dart';
 
-class verifyPres extends StatefulWidget{
-  const verifyPres({super.key});
+class verifyVP extends StatefulWidget{
 
-  State<verifyPres> createState()=> _verifyPres();
+  final String vp_jwt;
+  final String aud;
+
+  const verifyVP ({
+    super.key,
+    required String this.vp_jwt,
+    required String this.aud});
+
+  State<verifyVP> createState()=> _verifyVPState();
+
 }
 
-class _verifyPres extends State<verifyPres>{
+class _verifyVPState extends State<verifyVP>{
 
-  Map<String, dynamic>? _presData;
+  Map<String, dynamic>? verifyData;
+  Map<String, dynamic>? vcPayloadData;
 
-  final primaryColor = Colors.black;
-  final labelColor = Colors.greenAccent;
+  Future<void> _verifyVP() async {
+    try {
+      final ApiService api = ApiService();
+      final result = await api.verifyVP(vp_jwt: widget.vp_jwt);
 
+      if (result != null) {
+        print("응답 타입: ${result.runtimeType} ");
+        print("출력값 : $result ");
 
-  Future<void> _veriPres()async{
-    setState(() {
-      _presData;
-    });
+        final decoded = jsonDecode(result) as Map<String, dynamic>;
 
-    final api= ApiService();
-    final result= await api.verifyVP();
+        // verifiableCredential 안의 JWT 문자열 가져오기
+        final vc_jwt = decoded['payload']?['vp']?['verifiableCredential']?[0];
 
-    if(result!=null){
-      final data= jsonDecode(result) as Map<String, dynamic>;
-      setState(() {
-        _presData=data;
-      });
+        Map<String, dynamic>? vcData;
+        if (vc_jwt != null) {
+          vcData = Jwt.parseJwt(vc_jwt);
+        }
+
+        setState(() {
+          verifyData = decoded;
+          vcPayloadData = vcData;
+        });
+      }
+
+    } catch (e, stack) {
+      print("예외타입: $e");
+      print("스택 트레이스 : $stack");
     }
   }
 
-  Widget _buildCard(String title, String value){
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(title, style: TextStyle(fontWeight: FontWeight.bold, color: labelColor)),
-            const SizedBox(height: 8),
-            SelectableText(value, style: const TextStyle(fontSize: 14, fontFamily: 'monospace')),
-          ],
-        ),
-      ),
-    );
+  @override
+  void initState() {
+    super.initState();
+    _verifyVP();
   }
 
   @override
@@ -58,24 +69,32 @@ class _verifyPres extends State<verifyPres>{
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: primaryColor,
-        leading: BackButton(color: labelColor,),
+        backgroundColor: Colors.black,
+        leading: BackButton(color: Colors.greenAccent,),
+        title: const Text("VP 검증", style: TextStyle(color: Colors.greenAccent),),
       ),
-      body: Center(
-        child: _presData != null
-            ? Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _buildCard('주소', _presData!['DID :'] ?? '-'),
-            // 다른 결과 위젯 추가 가능
-          ],
-        )
-            : SizedBox.shrink(),
+      body: SingleChildScrollView(
+        padding:  EdgeInsets.all(16),
+
+        child:Center(
+            child: Column(
+              children: [
+                if (verifyData != null) ...[
+                  // VP 전체 유효성
+                  infoCard(title: "VP 유효성", value: verifyData!['valid']?.toString() ?? '-'),
+
+                  // 개별 VC 파싱 후 정보
+                  infoCard(title: "VC 만료", value: vcPayloadData!['exp']?.toString() ?? '-'),
+                  infoCard(title: "발급자", value: vcPayloadData!['iss']?.toString() ?? '-'),
+                  infoCard(title: "소유자", value: vcPayloadData!['sub']?.toString() ?? '-'),
+                  infoCard(title: "이름", value: vcPayloadData!['vc']?['credentialSubject']?['name']?.toString() ?? '-'),
+                  infoCard(title: "사번", value: vcPayloadData!['vc']?['credentialSubject']?['employeeId']?.toString() ?? '-'),
+                ]
+
+              ],
+            )
+        ),
       ),
     );
-
-
   }
 }
-
- */

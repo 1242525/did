@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static final String baseUrl ='http://220.149.235.79:5000';
-  static String address= '';
+  static final String baseUrl = 'http://220.149.235.79:5000';
+  static String address = '';
 
 
   //Did발급하기
@@ -22,7 +22,7 @@ class ApiService {
 
         if (decoded is Map<String, dynamic>) {
           return decoded;
-        }else {
+        } else {
           print("응답 타입 오류: $decoded");
           return null;
         }
@@ -52,7 +52,7 @@ class ApiService {
 
         if (decoded is Map<String, dynamic>) {
           return decoded;
-        }else {
+        } else {
           print("응답 타입 오류: $decoded");
           return null;
         }
@@ -94,8 +94,8 @@ class ApiService {
 
 
 //Did 상세정보
-  Future<Map<String, dynamic>?> detailDid(String did) async{
-    final url= Uri.parse('$baseUrl/did/resolve');
+  Future<Map<String, dynamic>?> detailDid(String did) async {
+    final url = Uri.parse('$baseUrl/did/resolve');
 
     try {
       final response = await http.post(
@@ -109,7 +109,7 @@ class ApiService {
 
         if (decoded is Map<String, dynamic>) {
           return decoded;
-        }else {
+        } else {
           print("응답 타입 오류: $decoded");
           return null;
         }
@@ -132,19 +132,19 @@ class ApiService {
     required int ttl,
     required String aud
 
-}) async{
-    final url= Uri.parse('$baseUrl/did/issue-vc');
+  }) async {
+    final url = Uri.parse('$baseUrl/did/issue-vc');
 
     try {
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          "issuer" : issuer,
+          "issuer": issuer,
           "subject": subject,
-          "claims" : claims,
+          "claims": claims,
           "ttl": ttl,
-          "aud" : aud
+          "aud": aud
         }),
       );
 
@@ -153,7 +153,7 @@ class ApiService {
 
         if (decoded is Map<String, dynamic>) {
           return decoded;
-        }else {
+        } else {
           print("응답 타입 오류: $decoded");
           return null;
         }
@@ -169,12 +169,12 @@ class ApiService {
   }
 
   //vp 생성
-  Future <String?> issueVP({
+  Future <Map<String, dynamic>?> issueVP({
     required String holder,
-    required List vc_jwts
-}
-      )async {
+    required List <String> vc_jwts
+  }) async {
     final url = Uri.parse('$baseUrl/did/present-vp');
+
 
     try {
       final response = await http.post(
@@ -182,11 +182,13 @@ class ApiService {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           "holder": holder,
-          "vc_jwts": vc_jwts
+          "vc_jwts": vc_jwts,
+          "ttl": 36000,
+          "aud": 'verifier.example',
         }),
       );
 
-      if (response.statusCode >= 200 && response.statusCode<=300) {
+      if (response.statusCode >= 200 && response.statusCode <= 300) {
         print('응답: ${response.body}');
         return jsonDecode(response.body);
       } else {
@@ -199,52 +201,22 @@ class ApiService {
     }
   }
 
-  // VC 검증
-  Future<String?> verifyVC({
-    required String vc_jwt
-})async{
-    final url=Uri.parse('$baseUrl/verify-vc');
-
-    try{
-    final response= await http.post(url,
-    headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        "vc_jwt": vc_jwt
-
-
-      }),
-    );
-
-    if(response.statusCode>=200 && response.statusCode<=300) {
-      print('응답: ${response.body}');
-      return jsonDecode(response.body);
-    }else{
-      return null;
-
-    }
-  }catch(e, stack){
-      print('예외발생: $e');
-      print(stack);
-    }
-
-  }
-
   // vp 검증
-  Future<String?> verifyVp({
+  Future<String?> verifyVP({
     required String vp_jwt
-})async {
+  }) async {
     final url = Uri.parse('$baseUrl/did/verify-vp');
 
     try {
       final response = await http.post(url,
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          "vp_jwt": vp_jwt
-
+          "vp_jwt": vp_jwt,
+          "aud": 'verifier.example',
         }),
 
       );
-      if (response.statusCode >= 200 && response.statusCode<=300) {
+      if (response.statusCode >= 200 && response.statusCode <= 300) {
         print('응답: ${response.body}');
         return response.body;
       } else {
@@ -256,23 +228,4 @@ class ApiService {
     }
   }
 
-  Future<String?> verifyVP()async {
-    final url = Uri.parse('$baseUrl/');
-
-    try {
-      final response = await http.post(url,
-        headers: {'content-Type': 'applications/json'},
-        body: jsonEncode({}),
-      );
-      if (response.statusCode == 200) {
-        print('응답: ${response.body}');
-        return response.body;
-      } else {
-        return null;
-      }
-    } catch (e, stack) {
-      print('예외발생: $e');
-      print(stack);
-    }
-  }
 }

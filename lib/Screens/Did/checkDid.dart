@@ -46,21 +46,23 @@ class _checkDidState extends State<checkDid> {
         leading: BackButton(color: labelColor),
         actions: [
           // AppBar 삭제 버튼
-          IconButton(
-            icon: const Icon(Icons.delete, color: Colors.redAccent),
-            onPressed: () {
-              setState(() {
-                _showDelete = !_showDelete; // 토글
-              });
-            },
+
+          TextButton.icon(
+              onPressed: (){
+                setState(() {
+                  _showDelete=!_showDelete;
+                });
+              },
+            label: const Text("삭제", style: TextStyle(color: Colors.redAccent, fontSize: 20),),
           ),
-          IconButton(
-            icon: const Icon(Icons.vpn_key, color: Colors.blueAccent),
-            onPressed: () {
+
+          TextButton.icon(
+            onPressed: (){
               setState(() {
-                _showVC = !_showVC; // VC 버튼 토글
+                _showVC = !_showVC;
               });
             },
+            label:  const Text("VC 발급", style: TextStyle(color: Colors.blueAccent, fontSize: 20),),
           ),
 
 

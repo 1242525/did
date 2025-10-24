@@ -1,66 +1,104 @@
-/*import 'dart:convert';
+import 'dart:convert';
+
 import 'package:did/Api/ApiService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../Widget/infoCard.dart';
+import '../vp/verifyVP.dart';
 
-class createPre extends StatefulWidget{
-  const createPre({super.key});
+class issueVP extends StatefulWidget{
 
-  State<createPre> createState () => _createPreCreate();
+  final String holder;
+  final List<String> vc_jwts;
 
+
+  issueVP ({super.key,
+  required String this.holder,
+    required List<String> this.vc_jwts
+  });
+
+  State<issueVP> createState ()=> _issueVPState();
 
 }
 
-class _createPreCreate extends State<createPre>{
-  final primaryColor= Colors.black;
-  final labelColor= Colors.greenAccent;
+class _issueVPState extends State<issueVP> {
 
-  Map<String, dynamic>? _preData;
-  bool _isLoading=false;
+  Map<String, dynamic>? vpData;
 
-  Future<void> _createPre()async {
-    setState(() {
-      _isLoading = true;
-      _preData;
-    });
 
-    final api = ApiService();
-    final result = await api.i();
+  Future <void> _issueVP() async {
+
+    try{
+      final ApiService api = ApiService();
+      final result = await api.issueVP(
+        holder: widget.holder,
+        vc_jwts: widget.vc_jwts);
+
     if (result != null) {
-      final data = jsonDecode(result) as Map<String, dynamic>;
+      print(" 실행결과: ${result.runtimeType}");
+      print("출력값: $result");
+
+      final decoded = jsonDecode(jsonEncode(result)) as Map<String, dynamic>;
+
       setState(() {
-        _preData = data;
+        vpData = decoded;
       });
+    } }
+        catch(e, stack){
+      print("응답 에러 : $e");
+      print("$stack");
     }
   }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.vc_jwts.isNotEmpty) {
+      _issueVP();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: primaryColor,
-        leading: BackButton(color: labelColor,),
+          title: Text(" VP 생성"),backgroundColor: Colors.black,
+        titleTextStyle: TextStyle(
+          color: Colors.greenAccent, // 텍스트 색상 지정
+          fontSize: 20,              // 필요하면 글자 크기 지정
+          fontWeight: FontWeight.bold,
+        ),
+        actions: [
+          TextButton.icon(
+            onPressed: vpData ==null ? null:(){
+              final vp_jwt = vpData!['vp_jwt'] as String?;
+              if (vp_jwt != null) {
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (_) =>
+                     verifyVP(vp_jwt: vp_jwt, aud: '',)
+                  ),
+                );
+              }
+            },
+            label: const Text("VP 검증", style: TextStyle(color: Colors.blueAccent, fontSize: 20),),
+          ),
+        ],
       ),
-      backgroundColor: primaryColor,
-      body: Center(
-        child: _preData != null
-            ? Column(
-          mainAxisSize: MainAxisSize.min,
+      body: SingleChildScrollView(
+        padding:  EdgeInsets.all(16),
+
+        child:Center(
+        child: Column(
           children: [
-            infoCard(title: "DID", value: _preData!['DID :'] ?? '-'),
-            // 다른 결과 위젯 추가 가능
-          ],
+            if (vpData != null) ...[
+          infoCard(title: "VP 만료(exp)", value: vpData!['exp']?.toString() ?? '-'),
+        infoCard(title: "VP JWT", value: vpData!['vp_jwt'] ?? '-'),
+        ],
+    ],
         )
-            : SizedBox.shrink(),
-      ),
+    ),
+    ),
     );
-
   }
-
-
 }
-
- */
-
-
-
