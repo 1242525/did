@@ -17,7 +17,7 @@ class detailDid extends StatefulWidget{
 class _detailDidState extends State<detailDid>{
   
   Map<String, dynamic>? detail;
-  final Color labelColor= Colors.greenAccent;
+  final labelColor= Colors.pink[50];
   
   Future<void> _detailDid(String did)async{
     final ApiService api= ApiService();

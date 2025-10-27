@@ -18,7 +18,7 @@ class infoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return Card(
-      color: Colors.greenAccent,
+      color: Colors.pink[50],
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 4),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),

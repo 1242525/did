@@ -65,7 +65,7 @@ class _issueVPState extends State<issueVP> {
       appBar: AppBar(
           title: Text(" VP 생성"),backgroundColor: Colors.black,
         titleTextStyle: TextStyle(
-          color: Colors.greenAccent, // 텍스트 색상 지정
+          color: Colors.pink[50], // 텍스트 색상 지정
           fontSize: 20,              // 필요하면 글자 크기 지정
           fontWeight: FontWeight.bold,
         ),

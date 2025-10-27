@@ -39,8 +39,8 @@ class homeScreen extends StatelessWidget{
                 const SizedBox(height: 30),
                 _buildHomeButton(
                   context,
-                  text: 'check DID',
-                  icon: Icons.checklist,
+                  text: 'DID List',
+                  icon: Icons.list,
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -51,46 +51,6 @@ class homeScreen extends StatelessWidget{
                 ),
 
 
-
-                /*const SizedBox(height: 30),
-                _buildHomeButton(
-                    context,
-                    text: 'create credential',
-                    icon: Icons.create,
-                    onPressed: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => createCred()
-                          ),
-                      );
-                    },
-                ),*/
-
-
-                /*const SizedBox(height: 30),
-                _buildHomeButton(context,
-                    text: 'verify credential',
-                    icon: Icons.check,
-                    onPressed: (){
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_)=> ()
-                      ),
-                      );
-                    },
-                ),
-
-                const SizedBox(height: 30),
-                _buildHomeButton(context,
-                    text: 'verify presentation',
-                    icon: Icons.checklist,
-                    onPressed: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_)=> verifyPres()
-                      ),
-                  );
-                  },
-                ),
-
-                 */
 
 
               ],
@@ -112,17 +72,17 @@ class homeScreen extends StatelessWidget{
       width: 260,
       height: 56,
       child: OutlinedButton.icon(onPressed: onPressed,
-          icon: Icon(icon, size: 22, color: Colors.greenAccent),
+          icon: Icon(icon, size: 22, color: Colors.pink[50]),
         label: Text(
           text,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Colors.greenAccent
+            color: Colors.pink[50]
           ),
         ),
         style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: Colors.greenAccent, width: 3),
+          side: BorderSide(color: Colors.pink[50]!, width: 3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40),
           ),

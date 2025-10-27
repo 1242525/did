@@ -16,7 +16,7 @@ class _MakeDidState extends State<MakeDid> {
   TextEditingController _labelController = TextEditingController();
 
   final primaryColor = Colors.black;
-  final labelColor = Colors.greenAccent;
+  final labelColor = Colors.pink[50];
 
   Future<void> _issueDid(String label) async {
     final api = ApiService();
@@ -73,11 +73,11 @@ class _MakeDidState extends State<MakeDid> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.greenAccent, // 버튼 배경색
+                    backgroundColor: Colors.pink[50], // 버튼 배경색
                     foregroundColor: Colors.black,       // 글자색
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), // 버튼 크기 조정
                   ),
-                  child: const Text("생성"),
+                  child: Text("생성", style: TextStyle(color: Colors.black),),
                 ),
               ],
             ),

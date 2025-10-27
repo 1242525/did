@@ -28,7 +28,7 @@ class _issueVCState extends State<issueVC> {
   TextEditingController _idController = TextEditingController();
 
   final primaryColor = Colors.black;
-  final labelColor = Colors.greenAccent;
+  final labelColor = Colors.pink[50];
 
   Future<void> _issueVC(int ttl, Map<String, dynamic>claims) async {
 
@@ -69,9 +69,9 @@ class _issueVCState extends State<issueVC> {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        leading: BackButton(color: Colors.greenAccent,),
+        leading: BackButton(color: labelColor,),
         title: const Text(
-          "VC 발급", style: TextStyle(color: Colors.greenAccent),),
+          "VC 발급"),
         actions: [
           TextButton.icon(
             onPressed: vcData == null ? null : () {
@@ -152,7 +152,7 @@ class _issueVCState extends State<issueVC> {
                   _issueVC(ttlValue, claims);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.greenAccent, // 버튼 배경색
+                  backgroundColor: labelColor, // 버튼 배경색
                   foregroundColor: Colors.black,       // 글자색
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), // 버튼 크기 조정
                 ),

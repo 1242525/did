@@ -15,7 +15,7 @@ class checkDid extends StatefulWidget {
 class _checkDidState extends State<checkDid> {
   Map<String, dynamic>? _checkData;
   final primaryColor = Colors.black;
-  final labelColor = Colors.greenAccent;
+  final labelColor = Colors.pink[50];
   bool _showDelete = false; //did삭제
   bool _showVC =false;
 
@@ -41,7 +41,7 @@ class _checkDidState extends State<checkDid> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("DID 리스트", style: TextStyle(color: Colors.greenAccent)),
+        title: Text("DID 리스트", style: TextStyle(color: Colors.pink[50])),
         backgroundColor: primaryColor,
         leading: BackButton(color: labelColor),
         actions: [

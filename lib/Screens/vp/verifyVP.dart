@@ -26,6 +26,7 @@ class _verifyVPState extends State<verifyVP>{
 
   Map<String, dynamic>? verifyData;
   Map<String, dynamic>? vcPayloadData;
+  final labelColor = Colors.pink[50];
 
   Future<void> _verifyVP() async {
     try {
@@ -70,8 +71,8 @@ class _verifyVPState extends State<verifyVP>{
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        leading: BackButton(color: Colors.greenAccent,),
-        title: const Text("VP 검증", style: TextStyle(color: Colors.greenAccent),),
+        leading: BackButton(color: labelColor,),
+        title: Text("VP 검증", style: TextStyle(color: labelColor),),
       ),
       body: SingleChildScrollView(
         padding:  EdgeInsets.all(16),
